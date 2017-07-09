@@ -3,7 +3,7 @@
 //Code by Paul Strohmeier (paul.strohmeier@gmail.com)
 
 //some buttons to do stuff with
-Button redButton;
+Slider redButton;
 Button greenButton;
 Button blueButton;
 Button blackWhiteButton;
@@ -25,11 +25,12 @@ void setup() {
   
   //initializing the buttons. The text is formatted like this: "name of button: button hotkey"
  
-  redButton = new Button("redButton:r");
+  redButton = new Slider("redButton:r");
   greenButton = new Button("greenButton:g");
   blueButton = new Button("blueButton:r");
   blackWhiteButton = new Button("BlackOrWhite:r");
   centralButton = new Button("someOtherButton:x", width/2, 600, 150, 250);
+   redButton.assignRange(1,99);
 }
 
 
@@ -40,6 +41,7 @@ void draw() {
 
 //display the buttons by providing them with x & y coordinate as well as height and width
   redButton.display(150, 200, 100, 60);
+  println(redButton.getSliderValue());
   greenButton.display(150, 300, 100, 60);
   blueButton.display(150, 400, 100, 60);
   blackWhiteButton.display(150, 500, 100, 60);

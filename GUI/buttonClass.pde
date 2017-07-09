@@ -5,7 +5,7 @@
 //once drawn, buttons track if they are toggled or not
 //you can toggle by clicking or by using the hotkey
 
-final class Button {
+public class Button {
   int buttonX, buttonY, buttonWidth, buttonHeight; //position & dimensions
   boolean state; 
   String buttonName; //name to be displayed
