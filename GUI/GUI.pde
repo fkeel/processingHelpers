@@ -29,8 +29,8 @@ void setup() {
   greenButton = new Button("greenButton:g");
   blueButton = new Button("blueButton:r");
   blackWhiteButton = new Button("BlackOrWhite:r");
-  centralButton = new Button("someOtherButton:x", width/2, 600, 150, 250);
-   redButton.assignRange(1,99);
+  centralButton = new Button("someOtherButton:x");
+ //  redButton.assignRange(1,99);
 }
 
 
@@ -45,7 +45,7 @@ void draw() {
   greenButton.display(150, 300, 100, 60);
   blueButton.display(150, 400, 100, 60);
   blackWhiteButton.display(150, 500, 100, 60);
-  centralButton.display();
+// centralButton.display();
 
 //check if the buttons are clicked and do stuff if they are
   if (blackWhiteButton.isToggled()) {

@@ -3,52 +3,63 @@
 //needs some method of entering a precise value by keyboard
 //maybe also constraining it to certain step sizes (using integer instead of float might already fix stuff
 
+//slider value is in percent (float between 0 and 1)
+//slider POSITION is pixels (int between sliderMin and sliderMax);
+
+//might need some more options to edit the handle appearence
 
 //a slider is a button that does not toggle, instead it returns a value
 public class Slider extends Button {
   float sliderValue;
-  int sliderPosition;
   int sliderMin;
   int sliderMax;
+  int sliderPosition;
   boolean active;
+   color handle = color(255,255,255);
 
-
-  Slider(String nameShortcut, int x, int y, int w, int h ) { //its built the same way, just we add a min and max value
-    super(nameShortcut, x, y, w, h);
-    sliderValue = 0;
-    sliderMin = 0;
-    sliderMax = 0;
-    active= false;
-  }
 
   //constructor without position
   Slider(String nameShortcut) {
     super(nameShortcut);
-    sliderValue = 0;
+    sliderValue = 0.5;
     sliderMin = 0;
-    sliderMax = 0;
+    sliderMax = 1;
+    sliderPosition = int(buttonWidth*sliderValue)+buttonX;
     active= false;
   }
 
-  void assignRange(int min, int max) { //we tell the slider what its range is here
-    sliderMin = min;
-    sliderMax = max;
-    sliderValue = max-min/2;
-    sliderPosition = buttonX+int((random(buttonWidth/2, buttonWidth*2))); //random to put it into interesting starting positions
-    //there is some strange bug here, its as if I took the button width double at some point
-  }
 
-  void display() {
-    super.display();
-    stroke(255);
-    rect(sliderPosition-3, buttonY, 6, buttonHeight); //add the position indicator object to the slider
-  }
 
-  //alternate constructor, if we want to give it new coordinates
+  //create the slider
   void display(int x, int y, int w, int h) {
-    super.display(x, y, w, h);
-    stroke(255);
-    rect(buttonX+sliderPosition-3, buttonY, 6, buttonHeight);
+    buttonX = x;
+    buttonY = y;
+    buttonWidth = w;
+    buttonHeight = h;
+    sliderPosition = int(buttonWidth*sliderValue)+buttonX;
+
+    fill(state? boxActive:boxInactive); //color of rectangle
+    rect(buttonX, buttonY, buttonWidth, buttonHeight);
+    stroke(255, 0, 0);
+    fill(handle);
+    rect(sliderPosition-2, buttonY, 4, buttonHeight);
+
+    if (this.checkMouse) {
+      this.activateClick();
+    }
+    if (this.checkKey) {
+      this.activateKey();
+    }
+     if (displayName) {
+      fill(state? textActive:textInactive); //color of name
+      text(buttonName, buttonX+nameOffsetX, buttonY+nameOffsetY+buttonHeight);
+      // fill(state? highGreen:highRed);  //color of hotkey
+    }
+  }
+
+
+  void setSliderValue(float target) {
+    sliderValue = target;
   }
 
   // not sure what to use the keyboard shortct for. kinda pointless here
@@ -70,7 +81,7 @@ public class Slider extends Button {
           fill(255);
         }
 
-        sliderPosition = mouseX - buttonX;
+        sliderPosition = mouseX;
         text(str(this.getSliderValue()), mouseX+10, mouseY + 10); //add the value, so you know what you're doing
       }
       fill(255);
@@ -82,11 +93,19 @@ public class Slider extends Button {
     }
   }
 
-  boolean isSliderActive() {
+  boolean sliderActive() {
     return active;
   }
   float getSliderValue() { //here we ask what its value is
-    sliderValue = map(sliderPosition, 0, buttonWidth, sliderMin, sliderMax);
+    sliderValue = map(sliderPosition, buttonX, buttonX+buttonWidth, sliderMin, sliderMax);
     return sliderValue;
+  }
+  
+   void handleFill(int a, int b, int c) {
+    handle = color(a, b, c);
+  }
+  
+   void handleFill(int a, int b, int c, int d) {
+    handle = color(a, b, c, d);
   }
 }
