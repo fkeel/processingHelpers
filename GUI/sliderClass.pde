@@ -29,6 +29,14 @@ public class Slider extends Button {
   }
 
 
+<<<<<<< Updated upstream
+=======
+  // void display() {
+  // super.display();
+  //  stroke(0,200,0);
+  //    rect(sliderPosition-3, buttonY, 6, buttonHeight);
+  // }
+>>>>>>> Stashed changes
 
   //create the slider
   void display(int x, int y, int w, int h) {
@@ -57,6 +65,7 @@ public class Slider extends Button {
     }
   }
 
+<<<<<<< Updated upstream
 
   void setSliderValue(float target) {
     sliderValue = target;
@@ -64,6 +73,9 @@ public class Slider extends Button {
 
   // not sure what to use the keyboard shortct for. kinda pointless here
   //I changed it around, so the curser can drift out of the slider
+=======
+  // not sure what to use the keyboard shortct for. kinda pointless here
+>>>>>>> Stashed changes
   void activateClick() { //instead of toggling, we move the slider
 
     if (!mousePressed && super.hover()) {
@@ -100,6 +112,7 @@ public class Slider extends Button {
     sliderValue = map(sliderPosition, buttonX, buttonX+buttonWidth, sliderMin, sliderMax);
     return sliderValue;
   }
+<<<<<<< Updated upstream
   
    void handleFill(int a, int b, int c) {
     handle = color(a, b, c);
@@ -107,5 +120,92 @@ public class Slider extends Button {
   
    void handleFill(int a, int b, int c, int d) {
     handle = color(a, b, c, d);
+=======
+}
+
+
+
+public class DiscreteSlider extends Button {
+  int sliderValue;
+  int sliderPosition;
+  int sliderMin;
+  int sliderMax;
+  int steps;
+
+  DiscreteSlider(String nameShortcut, int x, int y, int w, int h) { //its built the same way, just we add a min and max value
+    super(nameShortcut, x, y, w, h);
+    sliderValue = 0;
+    sliderMin = 0;
+    sliderMax = 1;
+    sliderPosition = x+w/2;
+    steps = 0;
+  }
+
+  //constructor without position
+  DiscreteSlider(String nameShortcut) {
+    super(nameShortcut);
+    sliderMax = 1;
+  }
+
+  void assignSteps(int stepnumber) {
+    steps = stepnumber;
+  }
+  void assignRange(int min, int max) { //we tell the slider what its range is here
+    sliderMin = min;
+    sliderMax = max;
+    sliderValue = (sliderMin+sliderMax)/2;
+  }
+
+  //  void display() {
+  // super.display();
+  // stroke(255);
+  // int value= this.getSliderValue();
+  // println("SLIDER VALUE FROM WITHIN THE DISCRETE SECTION" + value);
+  // rect(value*steps-3, buttonY, 6, buttonHeight);
+  // }
+
+  //alternate constructor, if we want to give it new coordinates
+  void display(int x, int y, int w, int h) {
+    super.display(x, y, w, h);
+    stroke(255);
+    float currentSliderPosition = (this.getSliderValue()/float(steps-1))*buttonWidth;
+    rect(buttonX+currentSliderPosition-3, buttonY, 6, buttonHeight);
+    strokeWeight(1);
+    for (int i = 0; i <steps-1; i = i+1) {
+      line(
+        (buttonX+(i/7.0)*buttonWidth), 
+        buttonY, 
+        (buttonX+(i/7.0)*buttonWidth), 
+        buttonHeight+buttonY);
+    }
+  }
+
+  boolean isClicked() {
+    if (mousePressed && super.hover()) {
+      clicked = true;
+      sliderPosition = mouseX - buttonX;
+    } else {
+      clicked = false;
+    }
+    return clicked;
+  }
+
+  // not sure what to use the keyboard shortct for. kinda pointless here
+  void activateClick() { //instead of toggling, we move the slider
+    if (mousePressed && super.hover()) {
+      clicked = true;
+      sliderPosition = mouseX - buttonX;
+    } else {
+      clicked = false;
+    }
+  }
+
+
+  int getSliderValue() { //here we ask what its value is
+    float tempValue = map(sliderPosition, 0, buttonWidth, sliderMin, sliderMax);
+    sliderValue = int(tempValue*float(steps));
+    println("THIS IS THE FREAKING " + sliderPosition + " xx " + buttonWidth + " xx " +  tempValue + " xx " + sliderMax);
+    return sliderValue;
+>>>>>>> Stashed changes
   }
 }
